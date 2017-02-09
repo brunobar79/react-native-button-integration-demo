@@ -10,6 +10,7 @@
  	AppRegistry,
  	StyleSheet,
  	Text,
+ 	ScrollView,
  	View,
  	Image,
  	TouchableOpacity,
@@ -18,17 +19,17 @@
  	ToastAndroid
  } from 'react-native';
 
-const Button = NativeModules.Button;
+ const Button = NativeModules.Button;
 
 
  export default class rnbtn extends Component {
 
  	constructor(props) {
- 	  super(props);
- 	
- 	  this.state = {
- 	  	userId: '',
- 	  };
+ 		super(props);
+
+ 		this.state = {
+ 			userId: ''
+ 		};
 
  	}
 
@@ -45,7 +46,7 @@ const Button = NativeModules.Button;
  	async getButtonRef(){
  		try{
  			const data = await Button.getButtonRef();
-	 		if (data){
+ 			if (data){
 				//You might want to send the value of "data" to your backend.
 				ToastAndroid.show(`got button ref:  ${data}`, ToastAndroid.SHORT);
 			}
@@ -58,42 +59,48 @@ const Button = NativeModules.Button;
 	
 	render() {
 		return (
-			<View style={styles.container}>
+			<ScrollView contentContainerStyle={styles.container}>
+				
 				<Image 
 					source={{uri:'https://www.usebutton.com/img/v3/ic_button-mark@2x.png'}}
 					style={styles.logo}
 				/>
+				
 				<Text style={styles.mainTitle}>
 					Button Integration Demo
 				</Text>
-				<Text style={styles.title}>
+
+				<Text style={styles.subtitle}>
 					Try any of the features below:
 				</Text>
+
 				<View style={styles.row}>
 					<TextInput
-				        style={styles.textInput}
-				        value={this.state.userId}
-				        onChangeText={(text) => this.setState({userId:text})}
-				        placeholder={'Set your button user id here'}
-				        placeholderTextColor={'#CCCCCC'}
-	        		/>
-	        		<TouchableOpacity 
-	        			style={styles.button}
-	        			onPress={ _ => this.setUserId(this.state.userId) }
-	        		>
-						<Text style={styles.btnText}>Set!</Text>
+						style={styles.textInput}
+						value={this.state.userId}
+						onChangeText={(text) => this.setState({userId:text})}
+						placeholder={'Set your button user id here'}
+						placeholderTextColor={'#DDDDDD'}
+						underlineColorAndroid={'#FFFFFF'}
+					/>
+					<TouchableOpacity 
+						style={styles.button}
+						onPress={ _ => this.setUserId(this.state.userId) }
+					>
+						<Text style={styles.btnText}>SET!</Text>
 					</TouchableOpacity>
 				</View>
 
 				<Text style={styles.title}>
 					Logout
 				</Text>
+
 				<View style={styles.row}>
 					<TouchableOpacity 
 						style={styles.button}
 						onPress={ _ => this.userDidLogout() }
 					>
-						<Text style={styles.btnText}>Logout!</Text>
+						<Text style={styles.btnText}>LOGOUT!</Text>
 					</TouchableOpacity>
 				</View>
 
@@ -103,13 +110,13 @@ const Button = NativeModules.Button;
 				</Text>
 				<View style={styles.row}>
 					<TouchableOpacity 
-	        			style={styles.button}
-	        			onPress={ _ => this.getButtonRef() }
-	        		>
-						<Text style={styles.btnText}>Get!</Text>
+						style={styles.button}
+						onPress={ _ => this.getButtonRef() }
+					>
+						<Text style={styles.btnText}>GET!</Text>
 					</TouchableOpacity>
 				</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }
@@ -119,7 +126,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#3a87c1',
+		backgroundColor: '#3a87c1'
 	},
 	logo: {
 		width: 60,
@@ -129,39 +136,45 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		marginVertical: 20
 	},
-	title: {
-		fontSize: 20,
-		color: '#FFFFFF',
-		marginTop: 30,
-	},
 	mainTitle: {
 		fontSize: 28,
 		textAlign: 'center',
 		margin: 10,
 		color: '#FFFFFF',
-		marginBottom: 40
+		marginBottom: 0
+	},
+	subtitle: {
+		fontSize: 20,
+		color: '#FFFFFF',
+		marginTop: 30,
+		marginBottom: 30
+	},
+	title: {
+		fontSize: 18,
+		color: '#FFFFFF',
+		marginTop: 30
 	},
 	instructions: {
 		textAlign: 'center',
 		color: '#333333',
-		marginBottom: 5,
+		marginBottom: 5
 	},
 	textInput:{
-		width: 250,
-		height: 45,
+		width: 230,
+		height: 50,
 		color: '#FFFFFF',
 		fontSize: 16,
 		marginRight: 20
 	},
 	button:{
-		borderWidth: 1,
-		borderColor: '#FFFFFF',
-		borderRadius: 6,
-		paddingHorizontal: 20,
-		paddingVertical: 10
+		paddingHorizontal: 30,
+		paddingVertical: 15,
+		elevation: 5,
+		backgroundColor: '#00589C'
 	},
 	btnText:{
-		color: '#FFF'
+		color: '#FFF',
+		fontWeight: 'bold'
 	}
 });
 
